@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'crispy_forms',
 
     'blog',
+    'tools',
     'oauth',
 
     'django.contrib.admin',
