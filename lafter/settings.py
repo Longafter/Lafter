@@ -61,7 +61,7 @@ ROOT_URLCONF = 'lafter.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -127,8 +127,11 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
+# 收集静态文件
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 
+# 后台默认设置
 XADMIN_TITLE = "左撇招牌字后台"
-XADMIN_FOOTER_TITLE = 'Power by xadmin'
+XADMIN_FOOTER_TITLE = 'power by xadmin'
