@@ -23,15 +23,19 @@ def get_article_list(sort=None, num=None):
 
 
 @register.simple_tag
-def get_tag_list():
-    '''返回标签列表'''
-    return Tag.objects.annotate(total_num=Count('article')).filter(total_num__gt=0)
+def get_category_list():
+    '''返回分类列表'''
+    category_list = Category.objects.annotate(total_num=Count('article'))
+    # category_list = category_list.filter(total_num__gt=0)
+    return category_list
 
 
 @register.simple_tag
-def get_category_list():
-    '''返回分类列表'''
-    return Category.objects.annotate(total_num=Count('article')).filter(total_num__gt=0)
+def get_tag_list():
+    '''返回标签列表'''
+    tag_list = Tag.objects.annotate(total_num=Count('article'))
+    # tag_list = tag_list.filter(total_num__gt=0)
+    return tag_list
 
 
 @register.inclusion_tag('blog/tags/article_list.html')
