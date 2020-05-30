@@ -20,14 +20,39 @@ class IndexView(ListView):
     # context_object_name属性用于给上下文变量取名（在模板中使用该名字）
     context_object_name = 'article_list'
 
+    def get_ordering(self):
+        ordering = super().get_ordering()
+        sort = self.kwargs.get('sort')
+        if sort == 'v':
+            return ('-views', '-update_date', '-id')
+        return ordering
+
 
 class ArchiveView(ListView):
     model = Article
     template_name = 'blog/archive.html'
     context_object_name = 'article_list'
+    paginate_by = 200
+    paginate_orphans = 50
 
 
-class CategoryView(IndexView):
+def AboutView(request):
+    site_date = datetime.datetime.strptime('2020-05-30','%Y-%m-%d')
+    return render(request, 'blog/about.html',context={'site_date':site_date})
+
+
+class CategoryView(ListView):
+    model = Article
+    template_name = 'blog/category.html'
+    context_object_name = 'article_list'
+
+    def get_ordering(self):
+        ordering = super().get_ordering()
+        sort = self.kwargs.get('sort')
+        if sort == 'v':
+            return ('-views', '-update_date', '-id')
+        return ordering
+
     # 重写通用视图的get_queryset方法，获取定制数据
     # 该方法默认获取指定模型的全部列表数据
     def get_queryset(self):
@@ -35,24 +60,37 @@ class CategoryView(IndexView):
         cate = get_object_or_404(Category, slug=self.kwargs.get('slug'))
         return queryset.filter(category=cate)
 
-    # 重写通用视图的get_queryset方法，获取定制模板变量字典
+    # 重写通用视图的get_context_data方法，获取定制模板变量字典
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         cate = get_object_or_404(Category, slug=self.kwargs.get('slug'))
-        context['category'] = cate
+        context['search_tag'] = '文章分类'
+        context['search_instance'] = cate
         return context
 
 
-class TagView(IndexView):
+class TagView(ListView):
+    model = Article
+    template_name = 'blog/tag.html'
+    context_object_name = 'article_list'
+
+    def get_ordering(self):
+        ordering = super().get_ordering()
+        sort = self.kwargs.get('sort')
+        if sort == 'v':
+            return ('-views', '-update_date', '-id')
+        return ordering
+
     def get_queryset(self):
         queryset = super().get_queryset()
         tag = get_object_or_404(Tag, slug=self.kwargs.get('slug'))
         return queryset.filter(tags=tag)
 
-    def get_context_date(self, **kwargs):
+    def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         tag = get_object_or_404(Tag, slug=self.kwargs.get('slug'))
-        context['tag'] = tag
+        context['search_tag'] = '文章标签'
+        context['search_instance'] = tag
         return context
 
 

@@ -1,4 +1,5 @@
 import emoji
+import markdown
 from django.db import models
 
 
