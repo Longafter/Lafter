@@ -31,12 +31,22 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    # for xadmin
     'xadmin',
     'crispy_forms',
 
+    # for blog
     'blog',
     'tools',
+
+    # for oauth
     'oauth',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.weibo',
+    'allauth.socialaccount.providers.github',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -45,6 +55,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 ]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -56,7 +67,9 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+
 ROOT_URLCONF = 'lafter.urls'
+
 
 TEMPLATES = [
     {
@@ -74,6 +87,7 @@ TEMPLATES = [
     },
 ]
 
+
 WSGI_APPLICATION = 'lafter.wsgi.application'
 
 
@@ -86,9 +100,6 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-
-
-# AUTH_USER_MODEL = 'oauth.Ouser'
 
 
 # Password validation
@@ -108,6 +119,37 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+
+# 自定义用户model
+AUTH_USER_MODEL = 'oauth.Ouser'
+
+# allauth配置
+AUTHENTICATION_BACKENDS = (
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
+
+# allauth需要的配置
+# 当出现"SocialApp matching query does not exist"这种报错的时候就需要更换这个ID
+SITE_ID = 1
+
+# 设置登录和注册成功后重定向的页面，默认是/accounts/profile/
+LOGIN_REDIRECT_URL = "/"
+
+# Email setting
+# imoprt from base_settings more infos
+# 登录方式，选择用户名或者邮箱都能登录
+ACCOUNT_AUTHENTICATION_METHOD = "username_email"
+# 禁用注册邮箱验证
+ACCOUNT_EMAIL_VERIFICATION = 'none'
+# 设置用户注册的时候必须填写邮箱地址
+ACCOUNT_EMAIL_REQUIRED = True
+# 登出直接退出，不用确认
+ACCOUNT_LOGOUT_ON_GET = True
 
 
 # Internationalization
@@ -130,6 +172,11 @@ USE_TZ = True
 # 收集静态文件
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+
+# 媒体文件收集
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
 # 后台默认设置

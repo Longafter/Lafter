@@ -101,21 +101,20 @@ class ArticleDetailView(DetailView):
 
     def get_object(self):
         obj = super().get_object()
-        # 设置浏览量增加时间判断,同一篇文章两次浏览超过半小时才重新统计阅览量,作者浏览忽略
+        # 设置浏览量增加时间判断,同一篇文章两次浏览超过五分钟才重新统计阅览量
         u = self.request.user
         ses = self.request.session
         the_key = 'is_read_{}'.format(obj.id)
         is_read_time = ses.get(the_key)
-        if u != obj.author:
-            if not is_read_time:
+        if not is_read_time:
+            obj.update_views()
+            ses[the_key] = time.time()
+        else:
+            now_time = time.time()
+            t = now_time - is_read_time
+            if t > 60 * 5:
                 obj.update_views()
                 ses[the_key] = time.time()
-            else:
-                now_time = time.time()
-                t = now_time - is_read_time
-                if t > 60 * 30:
-                    obj.update_views()
-                    ses[the_key] = time.time()
         # 获取文章更新的时间，判断是否从缓存中取文章的markdown,可以避免每次都转换
         ud = obj.update_date.strftime("%Y%m%d%H%M%S")
         md_key = '{}_md_{}'.format(obj.id, ud)

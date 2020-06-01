@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.conf import settings
 from django.urls import reverse
 
 
@@ -48,7 +48,7 @@ class Category(models.Model):
 # 文章
 class Article(models.Model):
     IMG_LINK = '/static/blog/img/summary.png'
-    author = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='作者')
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, verbose_name='作者')
     title = models.CharField(max_length=150, verbose_name='文章标题')
     summary = models.TextField('文章摘要', max_length=230, default='文章摘要等同于网页description内容，请务必填写...')
     body = models.TextField(verbose_name='文章内容')

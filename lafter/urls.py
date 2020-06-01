@@ -21,4 +21,5 @@ urlpatterns = [
     path('admin/', xadmin.site.urls, name='xadmin'),
     path('', include('blog.urls')),
     path('', include('tools.urls')),
+    path('accounts/', include('oauth.urls', 'oauth')),
 ]
