@@ -1,4 +1,5 @@
 {% load static %}
+{% load oauth_tags %}
 
 <nav class="navbar navbar-expand-md bg-white fixed-top blog-navbar py-md-0">
     <a class="navbar-brand d-md-none d-lg-block" id="site-logo-name" href="/">
@@ -32,12 +33,32 @@
             </form>
         </ul>
         <ul class="navbar-nav">
-            <li class="nav-item mr-2">
-                <a class="nav-link py-md-3" href="">登录</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link py-md-3" href="">注册</a>
-            </li>
+            {% if user.is_authenticated %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                       aria-haspopup="true" aria-expanded="false" title="{{ user.username }}，欢迎回来！">
+                       {% get_user_avatar_tag user %}
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right mt-0 rounded-0 border-0" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item pl-3" href="{% url 'oauth:profile' %}"><i class="fa fa-fw fa-user text-info mr-2"></i>个人资料</a>
+                        {% if user.is_staff %}
+                        <a class="dropdown-item pl-3" href="{% url 'xadmin:index' %}"><i
+                                class="fa fa-fw fa-key text-info mr-2"></i>后台管理</a>
+                        {% endif %}
+                        <a class="dropdown-item pl-3" href=""><i class="fa fa-fw fa-bell text-info mr-2"></i>消息
+                        </a>
+                        <a class="dropdown-item pl-3" href="{% url 'account_logout' %}"><i
+                                class="fa fa-fw fa-sign-out text-info mr-2"></i>注销</a>
+                    </div>
+                </li>
+            {% else %}
+                <li class="nav-item mr-2">
+                    <a class="nav-link py-md-3" href="{% url 'account_login' %}?next={{ request.path }}">登录</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link py-md-3" href="{% url 'account_signup' %}?next={{ request.path }}">注册</a>
+                </li>
+            {% endif %}
         </ul>
     </div>
 </nav>

@@ -21,5 +21,6 @@ urlpatterns = [
     path('admin/', xadmin.site.urls, name='xadmin'),
     path('', include('blog.urls')),
     path('', include('tools.urls')),
-    path('accounts/', include('oauth.urls', 'oauth')),
+    path('accounts/', include('oauth.urls', 'oauth')),  # 用户个人资料
+    path('accounts/', include('allauth.urls')),
 ]

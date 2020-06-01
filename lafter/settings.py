@@ -126,7 +126,7 @@ AUTH_USER_MODEL = 'oauth.Ouser'
 
 # allauth配置
 AUTHENTICATION_BACKENDS = (
-    # Needed to login by username in Django admin, regardless of `allauth`
+    # django admin所使用的用户登录与django-allauth无关
     'django.contrib.auth.backends.ModelBackend',
 
     # `allauth` specific authentication methods, such as login by e-mail
@@ -138,7 +138,7 @@ AUTHENTICATION_BACKENDS = (
 SITE_ID = 1
 
 # 设置登录和注册成功后重定向的页面，默认是/accounts/profile/
-LOGIN_REDIRECT_URL = "/"
+# LOGIN_REDIRECT_URL = "/"
 
 # Email setting
 # imoprt from base_settings more infos
