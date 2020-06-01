@@ -42,7 +42,7 @@
                     <div class="dropdown-menu dropdown-menu-right mt-0 rounded-0 border-0" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item pl-3" href="{% url 'oauth:profile' %}"><i class="fa fa-fw fa-user text-info mr-2"></i>个人资料</a>
                         {% if user.is_staff %}
-                        <a class="dropdown-item pl-3" href="{% url 'xadmin:index' %}"><i
+                        <a class="dropdown-item pl-3" target="_blank" href="{% url 'xadmin:index' %}"><i
                                 class="fa fa-fw fa-key text-info mr-2"></i>后台管理</a>
                         {% endif %}
                         <a class="dropdown-item pl-3" href=""><i class="fa fa-fw fa-bell text-info mr-2"></i>消息

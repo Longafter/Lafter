@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     # for xadmin
     'xadmin',
     'crispy_forms',
+    'imagekit',  # 上传图片的应用
 
     # for blog
     'blog',

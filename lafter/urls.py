@@ -16,6 +16,8 @@ Including another URLconf
 import xadmin
 
 from django.urls import path, include
+from django.conf.urls.static import static
+from django.conf import settings
 
 urlpatterns = [
     path('admin/', xadmin.site.urls, name='xadmin'),
@@ -23,4 +25,4 @@ urlpatterns = [
     path('', include('tools.urls')),
     path('accounts/', include('oauth.urls', 'oauth')),  # 用户个人资料
     path('accounts/', include('allauth.urls')),
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)  # 加入这个才能显示media文件
