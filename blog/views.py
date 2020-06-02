@@ -36,11 +36,6 @@ class ArchiveView(ListView):
     paginate_orphans = 50
 
 
-def AboutView(request):
-    site_date = datetime.datetime.strptime('2020-05-30','%Y-%m-%d')
-    return render(request, 'blog/about.html',context={'site_date':site_date})
-
-
 class CategoryView(ListView):
     model = Article
     template_name = 'blog/category.html'
@@ -131,3 +126,8 @@ class ArticleDetailView(DetailView):
             obj.toc = md.toc
             cache.set(md_key, (obj.body, obj.toc), 60 * 60 * 12)
         return obj
+
+
+def AboutView(request):
+    site_date = datetime.datetime.strptime('2020-05-30','%Y-%m-%d')
+    return render(request, 'blog/about.html',context={'site_date':site_date})

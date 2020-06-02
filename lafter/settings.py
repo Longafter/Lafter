@@ -49,6 +49,9 @@ INSTALLED_APPS = [
     'allauth.socialaccount.providers.weibo',
     'allauth.socialaccount.providers.github',
 
+    # for comment
+    'comment',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -139,7 +142,7 @@ AUTHENTICATION_BACKENDS = (
 SITE_ID = 1
 
 # 设置登录和注册成功后重定向的页面，默认是/accounts/profile/
-# LOGIN_REDIRECT_URL = "/"
+LOGIN_REDIRECT_URL = "/"
 
 # Email setting
 # imoprt from base_settings more infos
@@ -181,5 +184,5 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
 # 后台默认设置
-XADMIN_TITLE = "左撇招牌字后台"
+XADMIN_TITLE = "左撇子招牌字后台"
 XADMIN_FOOTER_TITLE = 'power by xadmin'
