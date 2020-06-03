@@ -26,4 +26,5 @@ urlpatterns = [
     path('', include('tools.urls')),
     path('accounts/', include('oauth.urls', 'oauth')),  # 用户个人资料
     path('accounts/', include('allauth.urls')),
+    path('comment/', include(('comment.urls', 'comment'))),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)  # 加入这个才能显示media文件

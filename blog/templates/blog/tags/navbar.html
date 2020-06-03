@@ -47,7 +47,7 @@
                         {% endif %}
                         <a class="dropdown-item pl-3" href=""><i class="fa fa-fw fa-bell text-info mr-2"></i>消息
                         </a>
-                        <a class="dropdown-item pl-3" href="{% url 'account_logout' %}"><i
+                        <a class="dropdown-item pl-3" href="{% url 'account_logout' %}?next={{ request.path }}"><i
                                 class="fa fa-fw fa-sign-out text-info mr-2"></i>注销</a>
                     </div>
                 </li>
