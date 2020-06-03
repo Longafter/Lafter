@@ -4,6 +4,7 @@ from django.views.decorators.http import require_POST
 from django.conf import settings
 from django.http import JsonResponse
 from datetime import datetime
+from . import handlers
 
 from blog.models import Article
 from .models import ArticleComment, Notification
