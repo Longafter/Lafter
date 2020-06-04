@@ -2,9 +2,12 @@ import markdown
 import time, datetime
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, DetailView
-from django.core.cache import cache
 from django.utils.text import slugify
+from django.conf import settings
+from django.core.cache import cache
 from markdown.extensions.toc import TocExtension  # 锚点的拓展
+from haystack.generic_views import SearchView  # 导入搜索视图
+from haystack.query import SearchQuerySet
 
 from .models import Article, Tag, Category
 
@@ -19,6 +22,8 @@ class IndexView(ListView):
     template_name = 'blog/index.html'
     # context_object_name属性用于给上下文变量取名（在模板中使用该名字）
     context_object_name = 'article_list'
+    paginate_by = getattr(settings, 'BASE_PAGE_BY', None)
+    paginate_orphans = getattr(settings, 'BASE_ORPHANS', 0)
 
     def get_ordering(self):
         ordering = super().get_ordering()
@@ -40,6 +45,8 @@ class CategoryView(ListView):
     model = Article
     template_name = 'blog/category.html'
     context_object_name = 'article_list'
+    paginate_by = getattr(settings, 'BASE_PAGE_BY', None)
+    paginate_orphans = getattr(settings, 'BASE_ORPHANS', 0)
 
     def get_ordering(self):
         ordering = super().get_ordering()
@@ -68,6 +75,8 @@ class TagView(ListView):
     model = Article
     template_name = 'blog/tag.html'
     context_object_name = 'article_list'
+    paginate_by = getattr(settings, 'BASE_PAGE_BY', None)
+    paginate_orphans = getattr(settings, 'BASE_ORPHANS', 0)
 
     def get_ordering(self):
         ordering = super().get_ordering()
@@ -131,3 +140,11 @@ class ArticleDetailView(DetailView):
 def AboutView(request):
     site_date = datetime.datetime.strptime('2020-05-30','%Y-%m-%d')
     return render(request, 'blog/about.html',context={'site_date':site_date})
+
+
+# 重写搜索视图，可以增加一些额外的参数，且可以重新定义名称
+class MySearchView(SearchView):
+    context_object_name = 'search_list'
+    paginate_by = getattr(settings, 'BASE_PAGE_BY', None)
+    paginate_orphans = getattr(settings, 'BASE_ORPHANS', 0)
+    queryset = SearchQuerySet().order_by('-views')

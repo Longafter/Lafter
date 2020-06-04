@@ -7,6 +7,7 @@ from .views import (
         TagView, 
         ArchiveView, 
         AboutView, 
+        MySearchView, 
     )
 
 app_name = 'blog'
@@ -21,4 +22,5 @@ urlpatterns = [
     path('tag/<slug:slug>/hot/', TagView.as_view(), {'sort': 'v'}, name='tag_hot'),
     path('archive/', ArchiveView.as_view(), name='archive'),
     path('about/', AboutView, name='about'),
+    path('search/', MySearchView.as_view(), name='search_view'),  # 全文搜索
 ]

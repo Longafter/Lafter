@@ -2,14 +2,17 @@ from __future__ import absolute_import
 import xadmin
 from .models import UserSettings, Log
 from xadmin.layout import *
+from xadmin import views
 
 from django.utils.translation import ugettext_lazy as _, ugettext
+
 
 class UserSettingsAdmin(object):
     model_icon = 'fa fa-cog'
     hidden_menu = True
 
 xadmin.site.register(UserSettings, UserSettingsAdmin)
+
 
 class LogAdmin(object):
 
@@ -30,3 +33,14 @@ class LogAdmin(object):
     model_icon = 'fa fa-cog'
 
 xadmin.site.register(Log, LogAdmin)
+
+
+class GlobalSetting(object):
+    # 设置base_site.html的Title
+    site_title = '左撇子招牌字后台'
+    # 设置base_site.html的Footer
+    site_footer  = 'power by xadmin'
+    # 设置菜单折叠
+    # menu_style = "accordion"
+
+xadmin.site.register(views.CommAdminView, GlobalSetting)

@@ -36,6 +36,9 @@ INSTALLED_APPS = [
     'crispy_forms',
     'imagekit',  # 上传图片的应用
 
+    # for search
+    'haystack',  # 全文搜索应用 这个要放在其他应用之前
+
     # for blog
     'blog',
     'tools',
@@ -183,6 +186,17 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
-# 后台默认设置
-XADMIN_TITLE = "左撇子招牌字后台"
-XADMIN_FOOTER_TITLE = 'power by xadmin'
+# 统一分页设置
+BASE_PAGE_BY = 10
+BASE_ORPHANS = 5
+
+
+# 全文搜索应用配置
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        'ENGINE': 'blog.whoosh_cn_backend.WhooshEngine',  # 选择语言解析器为自己更换的结巴分词
+        'PATH': os.path.join(BASE_DIR, 'whoosh_index'),  # 保存索引文件的地址，选择主目录下，这个会自动生成
+    }
+}
+# 实时自动更新索引配置
+HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
