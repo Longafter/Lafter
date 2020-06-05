@@ -35,6 +35,14 @@ class LogAdmin(object):
 xadmin.site.register(Log, LogAdmin)
 
 
+class ThemeSetting(object):
+    """配置主题"""
+    enable_themes = True
+    use_bootswatch = True
+
+xadmin.site.register(views.BaseAdminView,ThemeSetting)
+
+
 class GlobalSetting(object):
     # 设置base_site.html的Title
     site_title = '左撇子招牌字后台'

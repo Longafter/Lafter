@@ -25,7 +25,7 @@ SECRET_KEY = '_@x7p18hf0d3$pb6-m!za^b4=9g0*bsn%7ge1h3(dcp8thbm07'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'zpzpz.pythonanywhere.com']
 
 
 # Application definition
@@ -179,6 +179,7 @@ USE_TZ = True
 # 收集静态文件
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
 
 
 # 媒体文件收集

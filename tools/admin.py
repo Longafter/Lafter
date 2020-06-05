@@ -1,8 +1,8 @@
 import xadmin
 from .models import (
         Timeline,
-        Carousel,
         FriendLink,
+        Activate, 
     )
 
 
@@ -18,14 +18,13 @@ class TimelineAdmin(object):
     list_filter = ('star_num', 'update_date')
 
 
-@xadmin.sites.register(Carousel)
-class CarouselAdmin(object):
-    list_display = ('number', 'title', 'content', 'img_url', 'url')
-
-
 @xadmin.sites.register(FriendLink)
 class FriendLinkAdmin(object):
     list_display = ('name', 'description', 'link', 'create_date', 'is_active', 'is_show')
     date_hierarchy = 'create_date'
     list_filter = ('is_active', 'is_show')
 
+
+@xadmin.sites.register(Activate)
+class ActivateAdmin(object):
+    list_display = ('content', 'is_active', 'add_date')

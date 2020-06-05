@@ -1,18 +1,12 @@
 # 创建了新的tags标签文件后必须重启服务器
 
 from django import template
-from ..models import Carousel, FriendLink
+from ..models import FriendLink, Activate
 from django.db.models.aggregates import Count
 from django.utils.html import mark_safe
 import re
 
 register = template.Library()
-
-
-@register.simple_tag
-def get_carousel_list():
-    '''获取轮播图片列表'''
-    return Carousel.objects.all()
 
 
 @register.simple_tag
@@ -58,3 +52,9 @@ def get_request_param(request, param, default=None):
 def get_friends():
     '''获取活跃的友情链接'''
     return FriendLink.objects.filter(is_show=True, is_active=True)
+
+
+@register.simple_tag
+def get_activates():
+    '''获取活跃的友情链接'''
+    return Activate.objects.filter(is_active=True)

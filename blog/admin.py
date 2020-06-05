@@ -3,6 +3,7 @@ from .models import (
         Article,
         Tag,
         Category,
+        Carousel,
     )
 
 
@@ -42,4 +43,9 @@ class TagAdmin(object):
 @xadmin.sites.register(Category)
 class CategoryAdmin(object):
     list_display = ('name', 'id', 'slug')
+
+
+@xadmin.sites.register(Carousel)
+class CarouselAdmin(object):
+    list_display = ('number', 'title', 'content', 'img_url', 'url')
     

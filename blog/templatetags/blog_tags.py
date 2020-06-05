@@ -1,7 +1,7 @@
 # 创建了新的tags标签文件后必须重启服务器
 
 from django import template
-from ..models import Article, Category, Tag
+from ..models import Article, Category, Tag, Carousel
 from django.db.models.aggregates import Count
 from django.utils.html import mark_safe
 import re
@@ -47,6 +47,12 @@ def load_article_summary(article_list):
 @register.inclusion_tag('blog/tags/pagecut.html', takes_context=True)
 def load_pages(context):
     '''分页标签模板，不需要传递参数，直接继承参数'''
+
+
+@register.simple_tag
+def get_carousel_list():
+    '''获取轮播图片列表'''
+    return Carousel.objects.all()
 
 
 @register.simple_tag
