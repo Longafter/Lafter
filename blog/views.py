@@ -119,21 +119,14 @@ class ArticleDetailView(DetailView):
             if t > 60 * 5:
                 obj.update_views()
                 ses[the_key] = time.time()
-        # 获取文章更新的时间，判断是否从缓存中取文章的markdown,可以避免每次都转换
-        ud = obj.update_date.strftime("%Y%m%d%H%M%S")
-        md_key = '{}_md_{}'.format(obj.id, ud)
-        cache_md = cache.get(md_key)
-        if cache_md:
-            md = cache_md
-        else:
-            md = markdown.Markdown(extensions=[
-                'markdown.extensions.extra',
-                'markdown.extensions.codehilite',
-                TocExtension(slugify=slugify),
-            ])
-            obj.body = md.convert(obj.body)
-            obj.toc = md.toc
-            cache.set(md_key, (obj.body, obj.toc), 60 * 60 * 12)
+        
+        md = markdown.Markdown(extensions=[
+            'markdown.extensions.extra',
+            'markdown.extensions.codehilite',
+            TocExtension(slugify=slugify),
+        ])
+        obj.body = md.convert(obj.body)
+        obj.toc = md.toc
         return obj
 
 
