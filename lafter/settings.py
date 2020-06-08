@@ -25,7 +25,7 @@ SECRET_KEY = '_@x7p18hf0d3$pb6-m!za^b4=9g0*bsn%7ge1h3(dcp8thbm07'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'zpzpz.pythonanywhere.com']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -101,12 +101,25 @@ WSGI_APPLICATION = 'lafter.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
+# MySQL
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',  # 修改数据库为MySQL，并进行配置
+        'NAME': 'lafter_db',  # 数据库的名称
+        'USER': 'pingzhao',  # 数据库的用户名
+        'PASSWORD': 'zpzminer',  # 数据库的密码
+        'HOST': 'localhost',
+        'PORT': 3306,
     }
 }
+
+# Sqlite
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
 
 
 # Password validation

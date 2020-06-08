@@ -1,4 +1,7 @@
 /venv/
+__pycache__/
 *.pyc
 *.swp
 *.sqlite3
+*.json
+settings.py
